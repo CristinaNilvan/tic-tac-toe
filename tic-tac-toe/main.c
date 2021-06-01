@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-typedef struct name
+typedef struct
 {
     int x;
     int y;
