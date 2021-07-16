@@ -70,6 +70,15 @@ int Condition(int x, int y)
     return (x >= 0 && x < 3) && (y >= 0 && y < 3);
 }
 
+int CheckIfFull(int Matrix[][3])
+{
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; ++j)
+            if (Matrix[i][j] == FREE)
+                return 0;
+    return 1;
+}
+
 int CheckIfWin(int Matrix[][3], int Symbol)
 {
     for (int i = 0; i < 3; i++)
@@ -91,13 +100,12 @@ int CheckIfWin(int Matrix[][3], int Symbol)
 
 void PlayTheGame(int Matrix[][3], int FirstPlayerSymbol, int SecondPlayerSymbol)
 {
-    int Choices = 9;
     int Win = 0;
     int Player = 0;
     int Symbol;
     Coordinate Position;
 
-    while (Win == 0)
+    while (Win == 0 && CheckIfFull(Matrix) == 0)
     {
         Player = GetCurrentPlayer(Player);
 
@@ -120,14 +128,13 @@ void PlayTheGame(int Matrix[][3], int FirstPlayerSymbol, int SecondPlayerSymbol)
             printf("Invalid choice!\n");
 
         Win = CheckIfWin(Matrix, Symbol);
-
-        Choices -= 1;
     }
 
-    if (Choices == 0)
-        printf("Game over! No one won.");
-    else
+    if (Win == 1)
         printf("Victory for player %d!", Player);
+    else
+        if (CheckIfFull(Matrix) == 1)
+            printf("Game over! No one won.");
 }
 
 int main()
